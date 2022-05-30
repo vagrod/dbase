@@ -37,3 +37,5 @@ Every script has its version, and **dbase** carefully tracks what scripts have a
 ```
 dbase -run DATABASE_NAME prod "path\to\folder\with\scripts"
 ```
+
+Of course, universal scripts are only an option -- you can use scripts that are native to your database as well, or you can mix them.
