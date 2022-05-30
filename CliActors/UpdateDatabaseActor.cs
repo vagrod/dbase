@@ -14,7 +14,7 @@ public class UpdateDatabaseActor : CliActorBase
         var dbName = args[0];
         var configName = args[1];
 
-        var config = AppConfig.Servers.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName.ToLowerInvariant());
+        var config = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName.ToLowerInvariant());
         if (config == null) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
             return -1;

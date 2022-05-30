@@ -8,12 +8,12 @@ public class LsActor : CliActorBase
         if (args.Count > 0) {
             var configName = args[0].ToLowerInvariant();
 
-            if (AppConfig.Servers.All(x => x.ConfigurationName.ToLowerInvariant() != configName)) {
+            if (AppConfig.Servers!.All(x => x.ConfigurationName.ToLowerInvariant() != configName)) {
                 Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
                 return Task.FromResult(-1);
             }
 
-            var server = AppConfig.Servers.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName);
+            var server = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName);
         
             if (server == null) {
                 Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
@@ -56,7 +56,7 @@ public class LsActor : CliActorBase
         
         Console.WriteLine("\tList of servers:");
         Console.WriteLine("\t____________________________");
-        foreach (var server in AppConfig.Servers) {
+        foreach (var server in AppConfig.Servers!) {
             Console.WriteColorLine($"\t[blue]{server.ConfigurationName}[/blue]");
             Console.WriteColorLine($"\t\tType: [cyan]{server.Type}[/cyan]");
             Console.WriteColorLine($"\t\tAddress: [cyan]{server.DnsName}[/cyan]");

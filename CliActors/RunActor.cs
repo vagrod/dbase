@@ -17,7 +17,7 @@ public class RunActor : CliActorBase
         var path = args[2];
         var silent = args.Contains("/silent");
 
-        var config = AppConfig.Servers.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName.ToLowerInvariant());
+        var config = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName.ToLowerInvariant());
         if (config == null) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
             return -1;

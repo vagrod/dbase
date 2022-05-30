@@ -27,12 +27,12 @@ public class PrintActor : CliActorBase
             processor = new PostgreSqlDatabaseProcessor(new ServerDescription(), "dummy");
         else {
             // Maybe config name was given?
-            if (AppConfig.Servers.All(x => x.ConfigurationName.ToLowerInvariant() != processorTypeOrConfig)) {
+            if (AppConfig.Servers!.All(x => x.ConfigurationName.ToLowerInvariant() != processorTypeOrConfig)) {
                 System.Console.Write($"No such processor, neither configuration name \"{processorTypeOrConfig}\"");
                 return Task.FromResult(-1);
             }
 
-            var server = AppConfig.Servers.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == processorTypeOrConfig);
+            var server = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == processorTypeOrConfig);
         
             if (server == null) {
                 Console.WriteColorLine($"Configuration with name [cyan]\"{processorTypeOrConfig}\"[/cyan] [red]not found[red]");
@@ -45,29 +45,25 @@ public class PrintActor : CliActorBase
                 return Task.FromResult(-1);
             }
             
-            processor = maybeProcessor.Value;
+            processor = maybeProcessor.Unwrap();
         }
         
-        if (processor is not null) {
-            var fileContents = string.Empty;
-            try {
-                fileContents = File.ReadAllText(filePath);
-            }
-            catch (Exception ex) {
-                Console.WriteColorLine($"Error reading file [cyan]\"{filePath}\"[/cyan]: {ex.Message}");
-                return Task.FromResult(-1);
-            }
+        var fileContents = string.Empty;
+        try {
+            fileContents = File.ReadAllText(filePath);
+        }
+        catch (Exception ex) {
+            Console.WriteColorLine($"Error reading file [cyan]\"{filePath}\"[/cyan]: {ex.Message}");
+            return Task.FromResult(-1);
+        }
 
-            var maybePatch = processor.ParsePatch( System.IO.Path.GetFileName(filePath), fileContents);
-            if (maybePatch.Failed) {
-                Console.WriteColorLine($"Error parsing file [cyan]{filePath}[/cyan]: [red]{maybePatch.Error}[/red]");
-                return Task.FromResult(-1);
-            }
-            
-            System.Console.Write(maybePatch.Unwrap().Code);
-            return Task.FromResult(0);
+        var maybePatch = processor.ParsePatch( System.IO.Path.GetFileName(filePath), fileContents);
+        if (maybePatch.Failed) {
+            Console.WriteColorLine($"Error parsing file [cyan]{filePath}[/cyan]: [red]{maybePatch.Error}[/red]");
+            return Task.FromResult(-1);
         }
         
-        return Task.FromResult(-1);
+        System.Console.Write(maybePatch.Unwrap().Code);
+        return Task.FromResult(0);
     }
 }

@@ -13,12 +13,12 @@ public class RemoveServerActor : CliActorBase
 
         var configName = args[0].ToLowerInvariant();
 
-        if (AppConfig.Servers.All(x => x.ConfigurationName.ToLowerInvariant() != configName)) {
+        if (AppConfig.Servers!.All(x => x.ConfigurationName.ToLowerInvariant() != configName)) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
             return Task.FromResult(-1);
         }
 
-        AppConfig.Servers.RemoveAll(x => x.ConfigurationName.ToLowerInvariant() == configName);
+        AppConfig.Servers!.RemoveAll(x => x.ConfigurationName.ToLowerInvariant() == configName);
         AppConfig.Save();
         
         Console.WriteColorLine("[green]New configuration was saved.[/green] Press any key.");

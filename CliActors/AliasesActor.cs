@@ -12,7 +12,7 @@ public class AliasesActor : CliActorBase
         }
 
         var configName = args[0].ToLowerInvariant();
-        var config = AppConfig.Servers.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName);
+        var config = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName);
         
         if (config == null) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");

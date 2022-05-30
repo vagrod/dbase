@@ -52,7 +52,7 @@ public record FileNameMeta(
 /// Describes a history patch record
 /// </summary>
 /// <param name="Version">Patch version</param>
-/// <param name="DateApplied">Date-time when this patch was applied (`null` is wasn't)</param>
+/// <param name="DateApplied">Date-time when this patch was applied (`null` if wasn't)</param>
 public record PatchHistoryInfo(
     Version Version,
     DateTime? DateApplied

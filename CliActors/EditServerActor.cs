@@ -13,12 +13,12 @@ public class EditServerActor : CliActorBase
 
         var configName = args[0].ToLowerInvariant();
 
-        if (AppConfig.Servers.All(x => x.ConfigurationName.ToLowerInvariant() != configName)) {
+        if (AppConfig.Servers!.All(x => x.ConfigurationName.ToLowerInvariant() != configName)) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
             return Task.FromResult(-1);
         }
 
-        var server = AppConfig.Servers.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName);
+        var server = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName);
         
         if (server == null) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
@@ -78,7 +78,7 @@ ReSelect:
 ReTryConfigName:
                 var value = PromptInput("New configuration name", true);
 
-                if (AppConfig.Servers.Any(x =>
+                if (AppConfig.Servers!.Any(x =>
                         x.ConfigurationName.ToLowerInvariant() == value.ToLowerInvariant())) {
                     Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
                     goto ReTryConfigName;

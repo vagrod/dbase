@@ -66,7 +66,7 @@ public class Configuration
     /// <summary>
     /// A list of registered servers
     /// </summary>
-    public List<ServerDescription> Servers { get; set; } = new();
+    public List<ServerDescription>? Servers { get; set; } = new();
 
     public void Save()
     {
@@ -84,15 +84,26 @@ public class Configuration
         }
     }
 
-    public static Configuration Load()
+    public static async Task<Configuration> Load()
     {
+        try {
+            if (!File.Exists("config.yaml"))
+                await File.WriteAllTextAsync("config.yaml", "servers:");
+        }
+        catch (Exception ex) {
+            throw new Exception($"Error creating default \"config.yaml\" file\n{ex}");
+        }
         try
         {
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
-            return deserializer.Deserialize<Configuration>(File.ReadAllText("config.yaml"));
+            var config = deserializer.Deserialize<Configuration>(await File.ReadAllTextAsync("config.yaml"));
+            
+            config.Servers ??= new();
+            
+            return config;
         }
         catch (Exception ex)
         {

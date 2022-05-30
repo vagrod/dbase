@@ -67,11 +67,8 @@ class Program
             if (path != null)
                 Directory.SetCurrentDirectory(path);
         }
-        
-        if(!File.Exists("config.yaml"))
-            await File.WriteAllTextAsync("config.yaml", "servers:");
 
-        var appConfig = Configuration.Load();
+        var appConfig = await Configuration.Load();
 
 #if DEBUG
         var options = ParseCommandLine(new[]
@@ -102,7 +99,7 @@ class Program
         }
 
         // Don't trash the output for Print command
-        if (option.Key.ToLower() != CliActorBase.PrintCommand.ToLower()) {
+        if (!string.Equals(option.Key, CliActorBase.PrintCommand, StringComparison.CurrentCultureIgnoreCase)) {
             Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}[/cyan]");
             Console.WriteLine();
         }
