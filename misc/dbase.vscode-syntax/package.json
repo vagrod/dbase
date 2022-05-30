@@ -1,0 +1,25 @@
+{
+    "name": "dbase",
+    "displayName": "Dbase",
+    "description": "Dbase Universal Script",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "dbase",
+            "aliases": ["Dbase Universal Script", "dbase"],
+            "extensions": [".yaml"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "dbase",
+            "scopeName": "source.dbase",
+            "path": "./syntaxes/dbase.tmLanguage.json"
+        }]
+    }
+}

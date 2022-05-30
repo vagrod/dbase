@@ -1,0 +1,66 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Dbase Universal Script",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#sections"
+		},
+		{
+			"include": "#datatypes"
+		},
+		{
+			"include": "#sizes"
+		},
+		{
+			"include": "#fields"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.dbase",
+				"match": "\\b(key( |,)?|required( |,)?|fk )\\b"
+			}]
+		},
+		"sections": {
+			"patterns": [{
+				"name": "keyword.other.dbase",
+				"match": "\\b(storage|add|name|fields|order|alter|remove|rename-to|clause)\\b"
+			}]
+		},
+		"datatypes": {
+			"patterns": [{
+				"name": "constant.other.dbase",
+				"match": "\\b(uuid|big|string|int|float|bool|datetime|time|binary)\\b"
+			}]
+		},
+		"sizes": {
+			"patterns": [{
+				"name": "constant.numeric.dbase",
+				"match": "\\b-[0-9.]+\\b"
+			}]
+		},
+		"fields": {
+			"patterns": [{
+				"name": "entity.name.function.dbase",
+				"match": "[a-zA-Z0-9]+:"
+			}]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"begin": "desc",
+					"end": "\\n",
+					"name": "comment.line.double-slash.dbase"
+				}
+			]
+		}
+	},
+	"scopeName": "source.dbase"
+}

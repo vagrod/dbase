@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{b550bbe9-b4c4-4c02-8ee7-7133b88f98a5}") = "dbase", "dbase.csproj", "{dfa22800-72ea-4bf3-9787-c5775c77c31b}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{dfa22800-72ea-4bf3-9787-c5775c77c31b}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{dfa22800-72ea-4bf3-9787-c5775c77c31b}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{dfa22800-72ea-4bf3-9787-c5775c77c31b}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{dfa22800-72ea-4bf3-9787-c5775c77c31b}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
