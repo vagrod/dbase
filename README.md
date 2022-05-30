@@ -32,4 +32,8 @@ data:
     order: 3
 ```
 
-Every script has its version, and **dbase** carefully tracks what scripts have already been execured on a source, and what -- haven't, and will execure them for you, so your databases are always up-to-date across all your environments.
+Every script has its version, and **dbase** carefully tracks what scripts have already been execured on a source, and what -- haven't, and will execure them for you, so your databases are always up-to-date across all your environments, like
+
+```
+dbase -run DATABASE_NAME prod "path\to\folder\with\scripts"
+```
