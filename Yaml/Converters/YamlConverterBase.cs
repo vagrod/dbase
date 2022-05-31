@@ -64,22 +64,15 @@ public abstract class YamlConverterBase
 
     protected StorageData GetStorageData(string data) {
         var mainPart = data;
-        var descIndex = data.IndexOf(" desc ", StringComparison.OrdinalIgnoreCase);
-        
-        if(descIndex < 0)
-            descIndex = data.IndexOf(",desc ", StringComparison.OrdinalIgnoreCase);
-        
-        if(descIndex < 0)
-            descIndex = data.IndexOf("\tdesc ", StringComparison.OrdinalIgnoreCase);
-
-        descIndex++;
-        
+        var descIndex = DetectDescIndexInAString(data) + 1;
         var hasDescription = descIndex > 0;
         var description = null as string;
         
         if (hasDescription) {
-            mainPart = data.Substring(0, descIndex).Replace(",","").Trim();
-            description = data.Substring(descIndex + "desc ".Length);
+            var descContentIndex = descIndex + "desc ".Length;
+            
+            mainPart = data[..descIndex].Replace(",","").Trim();
+            description = data[descContentIndex..];
         }
         var parts = mainPart.Split('.');
         var schema = parts.Length == 1 ? DefaultSchema : parts[0];
@@ -90,7 +83,8 @@ public abstract class YamlConverterBase
     
     protected ColumnActionData GetColumnActionData(string name, string data) {
         var parts = data.Split(',', ' ');
-        var dataPart = data.Substring(parts[0].Length + 1).Trim();
+        var actionContentIndex = (parts[0].Length + 1);
+        var dataPart = data[actionContentIndex..].Trim();
 
         return parts[0].ToLower() switch
         {
@@ -100,7 +94,7 @@ public abstract class YamlConverterBase
             _ => throw new Exception($"Unknown column action: {parts[0]}")
         };
     }
-    
+
     protected ForeignKeyData GetForeignKeyData(string? data)
     {
         if (string.IsNullOrEmpty(data))
@@ -127,22 +121,15 @@ public abstract class YamlConverterBase
 
     protected ColumnData GetColumnData(string name, string data) {
         var mainPart = data;
-        var descIndex = data.IndexOf(" desc ", StringComparison.OrdinalIgnoreCase);
-        
-        if(descIndex < 0)
-            descIndex = data.IndexOf(",desc ", StringComparison.OrdinalIgnoreCase);
-        
-        if(descIndex < 0)
-            descIndex = data.IndexOf("\tdesc ", StringComparison.OrdinalIgnoreCase);
-
-        descIndex++;
-        
+        var descIndex = DetectDescIndexInAString(data) + 1;
         var hasDescription = descIndex > 0;
         var description = null as string;
         
         if (hasDescription) {
-            mainPart = data.Substring(0, descIndex);
-            description = data.Substring(descIndex + "desc ".Length);
+            var descContentIndex = descIndex + "desc ".Length;
+            
+            mainPart = data[..descIndex];
+            description = data[descContentIndex..];
         }
         
         var fieldData = mainPart.Split(' ', ',');
@@ -183,6 +170,18 @@ public abstract class YamlConverterBase
         var entries = maybeYaml.Unwrap();
      
         return GenerateSqlCodeFromYamlEntries(entries);
+    }
+    
+    private int DetectDescIndexInAString(string data) {
+        var descIndex = data.IndexOf(" desc ", StringComparison.OrdinalIgnoreCase);
+        
+        if(descIndex < 0)
+            descIndex = data.IndexOf(",desc ", StringComparison.OrdinalIgnoreCase);
+        
+        if(descIndex < 0)
+            descIndex = data.IndexOf("\tdesc ", StringComparison.OrdinalIgnoreCase);
+
+        return descIndex;
     }
 
 }
