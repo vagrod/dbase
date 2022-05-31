@@ -80,6 +80,9 @@ BEGIN");
             
             sb.Append($"    [{field.Key}] {fieldInfo.Type} {(fieldInfo.IsRequired || fieldInfo.IsKey ? "NOT NULL" : "NULL")}");
 
+            if(!fieldInfo.IsKey && fieldInfo.IsUnique && fieldInfo.TypeAlias is DataTypes.Int or DataTypes.Big)
+                sb.Append(" IDENTITY(1,1)");
+            
             if(fieldInfo.IsKey && fieldInfo.TypeAlias is DataTypes.Uuid)
                 guidKey = field.Key;
             
