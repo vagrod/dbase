@@ -32,12 +32,7 @@ data:
     order: 3
 ```
 
-Every script has its version, and **dbase** carefully tracks what scripts have already been execured on a source, and what -- haven't, and will execure them for you, so your databases are always up-to-date across all your environments, like
-
-```
-dbase -run DATABASE_NAME prod "path\to\folder\with\scripts"
-```
-
+Every script has its version, and **dbase** carefully tracks what scripts have already been execured on a source, and what -- haven't, and will execure them for you, so your databases are always up-to-date across all your environments.
 Of course, universal scripts are only an option -- you can use scripts that are native to your database as well, or you can mix them.
 
 Refer to [wiki](https://github.com/vagrod/dbase/wiki) for more info.
