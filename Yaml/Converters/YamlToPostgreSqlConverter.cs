@@ -88,7 +88,7 @@ public class YamlToPostgreSqlConverter : YamlConverterBase
             if (fieldInfo.HasDescription) 
                 descriptions.Add($"      comment on column \"{storageData.Schema}\".\"{storageData.Table}\".\"{fieldInfo.Name}\" is '{fieldInfo.Description}';");
 
-            var calculatedType = fieldInfo.IsUnique && fieldInfo.TypeAlias is DataTypes.Int or DataTypes.Big ? "serial" : fieldInfo.Type;
+            var calculatedType = fieldInfo.IsOrdinal && fieldInfo.TypeAlias is DataTypes.Int or DataTypes.Big ? "serial" : fieldInfo.Type;
             
             sb.Append($"        \"{field.Key}\" {calculatedType} {(fieldInfo.IsRequired || fieldInfo.IsKey ? "not null" : "null")}");
 

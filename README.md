@@ -15,7 +15,7 @@ storage:
     fields:
       Id: uuid key                                desc User Id
       Identity: string-100 required               desc User identity
-      UniqueNumber: big unique, required          desc Unique number
+      UniqueNumber: big ordinal, required         desc Unique number
       DisplayName: string-100 required            desc User name
       Position: string-150 required               desc User position
     order: 1

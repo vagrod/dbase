@@ -40,7 +40,7 @@ public abstract class YamlConverterBase
         bool HasDescription,
         string? Description,
         bool IsKey,
-        bool IsUnique,
+        bool IsOrdinal,
         bool IsRequired,
         ForeignKeyData ForeignKey
     );
@@ -148,13 +148,13 @@ public abstract class YamlConverterBase
         var fieldData = mainPart.Split(' ', ',');
         var isKey = fieldData.Contains("key", StringComparer.OrdinalIgnoreCase);
         var isRequired = fieldData.Contains("required", StringComparer.OrdinalIgnoreCase);
-        var isUnique = fieldData.Contains("unique", StringComparer.OrdinalIgnoreCase);
+        var isOrdinal = fieldData.Contains("ordinal", StringComparer.OrdinalIgnoreCase);
         var dataTypeString = fieldData[0];
         var dataTypeParts = dataTypeString.Split('-');
         var sqlType = MapSqlType(dataTypeParts[0].ToLower(), dataTypeParts.Length > 1 ? int.Parse(dataTypeParts[1]) : null);
         var fkData = GetForeignKeyData(data);
 
-        return new ColumnData(name, dataTypeParts[0].ToLower(), sqlType, hasDescription, description, isKey, isUnique, isRequired, fkData);
+        return new ColumnData(name, dataTypeParts[0].ToLower(), sqlType, hasDescription, description, isKey, isOrdinal, isRequired, fkData);
     }
     
     private ErrorOr<IEnumerable<YamlProcessor.YamlEntry>> ProcessYamlData(string yamlData)
