@@ -1,6 +1,6 @@
 # Dbase storage versioning tool
 
-**Dbase** is a tool for keeping a remote server data storage (*mssql*, *postgresql*. etc.) up to date with versioned script files.
+**Dbase** is a tool for keeping a remote server data storage (*mssql*, *postgresql*. etc.) up to date with versioned script files. Scripts can be either in a native to your server format, or in *dbase universal scripts* format
 
 > Dbase is a universal crossplatform tool and can work with any data storage, but for now only the *MSSQL* and *PostgreSQL* processors are implemented
 
