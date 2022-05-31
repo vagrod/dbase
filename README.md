@@ -39,3 +39,5 @@ dbase -run DATABASE_NAME prod "path\to\folder\with\scripts"
 ```
 
 Of course, universal scripts are only an option -- you can use scripts that are native to your database as well, or you can mix them.
+
+Refer to [wiki](https://github.com/vagrod/dbase/wiki) for more info.
