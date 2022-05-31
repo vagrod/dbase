@@ -4,7 +4,7 @@
 
 > Dbase is a universal crossplatform tool and can work with any data storage, but for now only the *MSSQL* and *PostgreSQL* processors are implemented
 
-With **universal script files** you can manage storage structure and do simple data operations in a simple *yaml* form, and those scripts will be translated into the final sql by the selected processor, and then will be executed on a database.
+With [universal script files](https://github.com/vagrod/dbase/wiki/Universal-script-files) you can manage storage structure and do simple data operations in a simple *yaml* form, and those scripts will be translated into the final sql by the selected processor, and then will be executed on a database.
 
 ``` yaml
 storage:
