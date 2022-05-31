@@ -6,7 +6,7 @@
 
 With **universal script files** you can manage storage structure and do simple data operations in a simple *yaml* form, and those scripts will be translated into the final sql by the selected processor, and then will be executed on a database.
 
-```
+``` yaml
 storage:
   add:
   - name: Users                                   desc Users cache
