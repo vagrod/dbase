@@ -42,7 +42,7 @@ public class HelpActor : CliActorBase
         Console.WriteColorLine($"\t\t[green]dbase[/green] [blue]-{AliasesCommand}[/blue] [cyan]<config_name>[/cyan]");
         Console.WriteLine();
         
-        Console.WriteColorLine($"\t[blue]-{LsCommand}[/blue] - lists all server configurations. If name is set, will dump configuration defails");
+        Console.WriteColorLine($"\t[blue]-{LsCommand}[/blue] - lists all server configurations. If name is set, will dump configuration details");
         Console.WriteColorLine($"\t\t[green]dbase[/green] [blue]-{LsCommand}[/blue] [[cyan]<config_name>[/cyan]]");
         Console.WriteLine();
         
