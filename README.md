@@ -6,6 +6,8 @@
 
 With [universal script files](https://github.com/vagrod/dbase/wiki/Universal-script-files) you can manage storage structure and do simple data operations in a simple *yaml* form, and those scripts will be translated into the final sql by the selected processor, and then will be executed on a database.
 
+`VSCode` and `Sublime Text` syntax highlighters are available (in the `misc` folder).
+
 ``` yaml
 storage:
   add:
@@ -41,5 +43,3 @@ dbase -run DATABASE_NAME prod "path\to\folder\with\scripts"
 Of course, universal scripts are only an option -- you can use scripts that are native to your database as well, or you can mix them.
 
 Refer to [wiki](https://github.com/vagrod/dbase/wiki) for more info.
-
-VSCode and Sunlime Text syntax highlighters are available (in the `misc` folder)
