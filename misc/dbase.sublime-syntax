@@ -29,7 +29,7 @@ contexts:
     # need to be escaped: this is done by using two single quotes next to each
     # other.
     - match: '\b(ordinal( |,)?|key( |,)?|required( |,)?|fk )\b'
-      scope: keyword.control.dbase
+      scope: keyword.operator.assignment.dbase
   
   sections:
     - match: '\b(storage|add|name|fields|order|alter|remove|rename-to|clause)\b'
@@ -48,11 +48,15 @@ contexts:
       scope: variable.parameter.dbase
 
   strings:
-    # Comments begin with a '//' and finish at the end of the line.
     - match: 'desc '
       scope: punctuation.definition.comment.dbase
       push:
-        # This is an anonymous context push for brevity.
         - meta_scope: comment.line.double-slash.dbase
         - match: $\n?
+          pop: true
+    - match: ''''''''
+      scope: string.dbase
+      push:
+        - meta_scope: string.dbase
+        - match: ''''''''
           pop: true

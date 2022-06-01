@@ -24,7 +24,7 @@
 	"repository": {
 		"keywords": {
 			"patterns": [{
-				"name": "keyword.control.dbase",
+				"name": "keyword.operator.assignment.dbase",
 				"match": "\\b(ordinal( |,)?|key( |,)?|required( |,)?|fk )\\b"
 			}]
 		},
@@ -58,6 +58,11 @@
 					"begin": "desc",
 					"end": "\\n",
 					"name": "comment.line.double-slash.dbase"
+				},
+				{
+					"begin": "'''",
+					"end": "'''",
+					"name": "string.dbase"
 				}
 			]
 		}

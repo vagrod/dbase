@@ -83,7 +83,7 @@ public abstract class YamlConverterBase
     
     protected ColumnActionData GetColumnActionData(string name, string data) {
         var parts = data.Split(',', ' ');
-        var actionContentIndex = (parts[0].Length + 1);
+        var actionContentIndex = parts[0].Length + 1;
         var dataPart = data[actionContentIndex..].Trim();
 
         return parts[0].ToLower() switch
