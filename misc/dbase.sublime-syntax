@@ -32,7 +32,7 @@ contexts:
       scope: keyword.operator.assignment.dbase
   
   sections:
-    - match: '\b(storage|add|name|fields|order|alter|remove|rename-to|clause)\b'
+    - match: '\b(storage|data|add|name|fields|order|alter|remove|rename-to|clause)\b'
       scope: variable.function.dbase
 
   datatypes:

@@ -31,7 +31,7 @@
 		"sections": {
 			"patterns": [{
 				"name": "keyword.other.dbase",
-				"match": "\\b(storage|add|name|fields|order|alter|remove|rename-to|clause)\\b"
+				"match": "\\b(storage|data|add|name|fields|order|alter|remove|rename-to|clause)\\b"
 			}]
 		},
 		"datatypes": {
