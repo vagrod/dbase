@@ -32,9 +32,9 @@ public class EditServerActor : CliActorBase
         Console.WriteColorLine($"\t1. Configuration name [cyan]({server.ConfigurationName})[/cyan]");
         Console.WriteColorLine($"\t2. Type [cyan]({server.Type})[/cyan]");
         Console.WriteColorLine($"\t3. Server name [cyan]({server.DnsName})[/cyan]");
-        Console.WriteColorLine($"\t4. Port [cyan]({(server.Port?.ToString() ?? "не указан")})[/cyan]");
+        Console.WriteColorLine($"\t4. Port [cyan]({(server.Port?.ToString() ?? "not set")})[/cyan]");
         Console.WriteColorLine($"\t5. User name [cyan]({server.DatabaseUser})[/cyan]");
-        Console.WriteColorLine($"\t6. User password [cyan]({(string.IsNullOrEmpty(server.Password) ? "не указан" : server.Password)})[/cyan]");
+        Console.WriteColorLine($"\t6. User password [cyan]({(string.IsNullOrEmpty(server.Password) ? "not set" : server.Password)})[/cyan]");
         Console.WriteColorLine($"\t7. Strict versioning [cyan]({((server.StrictVersioning.HasValue && server.StrictVersioning.Value) || !server.StrictVersioning.HasValue  ? "enabled" : "disabled")})[/cyan]");
         Console.WriteColorLine($"\t8. Patch preprocessing [cyan]({(preprocessingOn ? "enabled" : "disabled")})[/cyan]");
         Console.WriteColorLine($"\t9. Backup folder [cyan]({server.BackupFolder})[/cyan]");
@@ -110,7 +110,7 @@ ReTryType:
             case 4:
             {
 ReTryPort:
-                var value = PromptInput("Port ([blue]enter[/blue] = порт отсутствует)");
+                var value = PromptInput("Port ([blue]enter[/blue] = not set)");
                 if (string.IsNullOrEmpty(value)) 
                     server.Port = null;
                 else {
