@@ -55,6 +55,10 @@ class Program
         (name: CliActorBase.HelpCommand, 
             isArgumentOptional: true, 
             argsCount: 0,
+            optionalCount: null),
+        (name: CliActorBase.VersionCommand, 
+            isArgumentOptional: true, 
+            argsCount: 0,
             optionalCount: null)
     });
 
@@ -98,8 +102,8 @@ class Program
             return -1;
         }
 
-        // Don't trash the output for Print command
-        if (!string.Equals(option.Key, CliActorBase.PrintCommand, StringComparison.CurrentCultureIgnoreCase)) {
+        // Don't trash the output for Print and Version commands
+        if (option.Key is not CliActorBase.PrintCommand and not CliActorBase.VersionCommand) {
             Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}[/cyan]");
             Console.WriteLine();
         }
@@ -113,7 +117,7 @@ class Program
     {
         Dictionary<string, List<string>> options = new();
         
-        string CleanOptionName(string s) => s.TrimStart('-').ToLowerInvariant();
+        string CleanOptionName(string s) => (s.StartsWith('-') ? s[1..] : s).ToLowerInvariant();
         bool HasOption(string s) => SwitchesConfig.Any(x => x.name == CleanOptionName(s));
 
         (string name, bool isArgumentOptional, int argsCount, int? optionalCount) lastConfig = default;

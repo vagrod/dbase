@@ -15,6 +15,7 @@ public abstract class CliActorBase
     public const string LsCommand = "ls";
     public const string HelpCommand = "help";
     public const string PrintCommand = "print";
+    public const string VersionCommand = "-version";
     
     protected CliActorBase(Configuration appConfig) {
         AppConfig = appConfig;
