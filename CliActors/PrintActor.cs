@@ -47,8 +47,8 @@ public class PrintActor : CliActorBase
             
             processor = maybeProcessor.Unwrap();
         }
-        
-        var fileContents = string.Empty;
+
+        string fileContents;
         try {
             fileContents = File.ReadAllText(filePath);
         }

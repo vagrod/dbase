@@ -32,24 +32,23 @@ public class UpdateDatabaseActor : CliActorBase
             System.Console.WriteLine(maybeMeta.Error);
             return -1;
         }
-        var meta = maybeMeta.Unwrap();
 
+        var meta = maybeMeta.Unwrap();
         if (!meta.IsInitialized)
         {
             Console.WriteColorLine($"Database [cyan]\"{dbName}\"[/cyan] [red]was not initialized[/red] for [green]dbase[/green]. Run \"[green]dbase[/green] -[blue]{InitCommand}[/blue] [cyan]{configName}[/cyan] [cyan]{dbName}[/cyan]\". Press any key");
             System.Console.ReadLine();
+            return -1;
         }
-        else
-        {
-            var maybeUpdate = await processor.UpdateDatabaseAsync();
-            if (maybeUpdate.Failed) {
-                System.Console.WriteLine(maybeUpdate.Error);
-                return -1;
-            }
+        
+        var maybeUpdate = await processor.UpdateDatabaseAsync();
+        if (maybeUpdate.Failed) {
+            System.Console.WriteLine(maybeUpdate.Error);
+            return -1;
+        }
 
-            Console.WriteColorLine($"Database [cyan]\"{dbName}\"[/cyan] [green]was updated[/green] to the [green]dbase[/green] version [cyan]{Program.Version}[/cyan]. Press any key.");
-            System.Console.ReadLine();
-        }
+        Console.WriteColorLine($"Database [cyan]\"{dbName}\"[/cyan] [green]was updated[/green] to the [green]dbase[/green] version [cyan]{Program.Version}[/cyan]. Press any key.");
+        System.Console.ReadLine();
 
         return 0;
     }

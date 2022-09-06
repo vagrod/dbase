@@ -32,24 +32,23 @@ public class InitDatabaseActor : CliActorBase
             System.Console.WriteLine(maybeMeta.Error);
             return -1;
         }
+        
         var meta = maybeMeta.Unwrap();
-
         if (meta.IsInitialized)
         {
             Console.WriteColorLine($"Database [cyan]\"{dbName}\"[/cyan] [green]has already been initialized[/green] with [green]dbase[/green] version [cyan]{meta.DBaseVersion} {meta.LastUpdated:dd.MM.yyyy at HH:mm}[/cyan].");
             System.Console.ReadLine();
+            return -1;
         }
-        else
-        {
-            var maybeInit = await processor.InitializeDatabaseAsync();
-            if (maybeInit.Failed) {
-                System.Console.WriteLine(maybeInit.Error);
-                return -1;
-            }
+        
+        var maybeInit = await processor.InitializeDatabaseAsync();
+        if (maybeInit.Failed) {
+            System.Console.WriteLine(maybeInit.Error);
+            return -1;
+        }
 
-            Console.WriteColorLine($"Database [cyan]\"{dbName}\"[/cyan] [green]was initialized[/green]. Press any key.");
-            System.Console.ReadLine();
-        }
+        Console.WriteColorLine($"Database [cyan]\"{dbName}\"[/cyan] [green]was initialized[/green]. Press any key.");
+        System.Console.ReadLine();
 
         return 0;
     }
