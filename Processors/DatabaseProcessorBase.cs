@@ -239,7 +239,7 @@ public abstract class DatabaseProcessorBase
     /// <returns>Will return backup file name on success. Error with description if failed</returns>
     public abstract Task<ErrorOr<string>> BackupAsync();
     /// <summary>
-    /// Restires source (database) from a backup
+    /// Restores source (database) from a backup
     /// </summary>
     /// <param name="backupFileName">Backup file name (without the path)</param>
     /// <returns>Will return error with description if failed</returns>
