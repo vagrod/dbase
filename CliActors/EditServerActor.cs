@@ -48,14 +48,14 @@ public class EditServerActor : CliActorBase
         
         System.Console.WriteLine();
         Console.WriteColorLine($"\t0. Cancel and quit");
-        Console.WriteColorLine($"\tс. Save and quit");
+        Console.WriteColorLine($"\ts. Save and quit");
         
 ReSelect:
-        System.Console.Write("Choice: ");
+        System.Console.Write("Your selection: ");
         var choiceString = System.Console.ReadLine();
 
         if (!int.TryParse(choiceString, out var choice)) {
-            if(!string.IsNullOrEmpty(choiceString) && (choiceString.ToLowerInvariant() == "c" || choiceString.ToLowerInvariant() == "с")) {
+            if(!string.IsNullOrEmpty(choiceString) && choiceString.ToLowerInvariant() == "s") {
                 AppConfig.Save();
                 goto Saved;
             }

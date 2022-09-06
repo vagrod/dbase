@@ -161,7 +161,7 @@ public class MSSqlDatabaseProcessor : DatabaseProcessorBase
                 if (restoreResult.Failed) 
                     return SuccessOr<PatchRunErrorInfo>.Fail(err with { Description = $"{err.Description};\n{restoreResult.UnwrapError()}" });
                 
-                return SuccessOr<PatchRunErrorInfo>.Fail(err with { Description = $"{err.Description}\nБаза данных была восстановлена из бэкапа." });        
+                return SuccessOr<PatchRunErrorInfo>.Fail(err with { Description = $"{err.Description}\nDatabase has been restored from a backup." });        
             }
 
             return runError.Value;
@@ -192,7 +192,7 @@ public class MSSqlDatabaseProcessor : DatabaseProcessorBase
             await using var reader = await command.ExecuteReaderAsync();
             
             if (!await reader.ReadAsync())
-                return ErrorOr<Meta>.Fail("Не удалось получить информацию о версии dbase в источнике");
+                return ErrorOr<Meta>.Fail("Unable to get dbase version information from the source");
             
             var versionString = reader.GetString(0);
             var lastUpdated = reader.GetDateTime(1);
@@ -248,7 +248,7 @@ public class MSSqlDatabaseProcessor : DatabaseProcessorBase
             }
 
             if (!strictVersioning) {
-                if (historyInfo.DateApplied != null) // Пропускаем уже прогнанный патч в режиме упрощённой версионности
+                if (historyInfo.DateApplied != null) // Skip already applied patch in a lazy versioning mode
                     return SuccessOr<PatchRunErrorInfo>.Success;
             }
             
@@ -283,7 +283,7 @@ public class MSSqlDatabaseProcessor : DatabaseProcessorBase
                 if (restoreResult.Failed) 
                     return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, $"{ex.Message};\n{restoreResult.UnwrapError()}"));
                 
-                return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, $"{ex.Message}\nБаза данных была восстановлена из бэкапа."));
+                return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, $"{ex.Message}\nDatabase has been restored from a backup."));
             }
             
             return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, ex.Message));

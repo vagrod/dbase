@@ -147,10 +147,10 @@ public abstract class DatabaseProcessorBase
     /// <returns>Metadata gathered from the file name, or error if failed</returns>
     protected ErrorOr<FileNameMeta> ParseMetaFromFilename(string fileName)
     {
-        if (string.IsNullOrEmpty(fileName)) return ErrorOr<FileNameMeta>.Fail("Пустое имя файла");
+        if (string.IsNullOrEmpty(fileName)) return ErrorOr<FileNameMeta>.Fail("Empty file name given");
         var match = Regex.Match(fileName, @"^(\s*|[a-zA-Z]*)([\-\._])*((?<major>\d+)(\.|-|_)(?<minor>\d+)|\w*)\s*(?<therest>.*)$", RegexOptions.Singleline);
         if (!match.Success)
-            return ErrorOr<FileNameMeta>.Fail($"Не удалось прочитать информацию о версии патча из имени файла {fileName}");
+            return ErrorOr<FileNameMeta>.Fail($"Unable to extract version information from the filename \"{fileName}\"");
         
         if(match.Groups.ContainsKey("major") && match.Groups.ContainsKey("minor") 
                                              && !string.IsNullOrEmpty(match.Groups["major"].Value)

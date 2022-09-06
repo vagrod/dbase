@@ -24,7 +24,7 @@ public class AliasesActor : CliActorBase
 
 Home:
         Console.WriteColorLine("[blue](+)[/blue] = new alias");
-        Console.WriteColorLine("[blue](c)[/blue] = save all changes");
+        Console.WriteColorLine("[blue](s)[/blue] = save all changes");
         Console.WriteColorLine("[blue](x)[/blue] = quit without saving");
 
 ReSelectAliases:
@@ -39,12 +39,12 @@ ReSelectAliases:
         int choiceInt;
 
 ReEnterAliasChoice:
-        System.Console.Write("Ваш выбор: ");
+        System.Console.Write("Your selection: ");
         var choice = System.Console.ReadLine();
         if (choice == "+")
             goto AddAlias;
         
-        if (choice == "c" || choice == "с")
+        if (choice == "s")
             goto SaveAll;
         
         if (choice == "x")

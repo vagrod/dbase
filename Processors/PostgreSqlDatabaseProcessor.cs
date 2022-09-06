@@ -156,7 +156,7 @@ public class PostgreSqlDatabaseProcessor : DatabaseProcessorBase
                 if (restoreResult.Failed) 
                     return SuccessOr<PatchRunErrorInfo>.Fail(err with { Description = $"{err.Description};\n{restoreResult.UnwrapError()}" });
                 
-                return SuccessOr<PatchRunErrorInfo>.Fail(err with { Description = $"{err.Description}\nБаза данных была восстановлена из бэкапа." });        
+                return SuccessOr<PatchRunErrorInfo>.Fail(err with { Description = $"{err.Description}\nDatabase has been restored from a backup." });        
             }
 
             return runError.Value;
@@ -247,7 +247,7 @@ public class PostgreSqlDatabaseProcessor : DatabaseProcessorBase
             }
             
             if (!strictVersioning) {
-                if (historyInfo.DateApplied != null) // Just skip already applied patch if not in strict versioning mode
+                if (historyInfo.DateApplied != null) // Skip already applied patch in a lazy versioning mode
                     return SuccessOr<PatchRunErrorInfo>.Success;
             }
             
@@ -283,7 +283,7 @@ public class PostgreSqlDatabaseProcessor : DatabaseProcessorBase
                 if (restoreResult.Failed) 
                     return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, $"{ex.Message};\n{restoreResult.UnwrapError()}"));
                 
-                return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, $"{ex.Message}\nБаза данных была восстановлена из бэкапа."));
+                return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, $"{ex.Message}\nDatabase has been restored from a backup."));
             }
             
             return SuccessOr<PatchRunErrorInfo>.Fail(new PatchRunErrorInfo(patch.Version, ex.Message));
