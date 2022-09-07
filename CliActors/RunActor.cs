@@ -17,7 +17,8 @@ public class RunActor : CliActorBase
         var path = args[2];
         var silent = args.Contains("/silent");
 
-        var config = AppConfig.Servers!.FirstOrDefault(x => x.ConfigurationName.ToLowerInvariant() == configName.ToLowerInvariant());
+        var config = AppConfig.Servers!.FirstOrDefault(x =>
+            x.ConfigurationName.ToLowerInvariant() == configName.ToLowerInvariant());
         if (config == null) {
             Console.WriteColorLine($"Configuration with name [cyan]\"{configName}\"[/cyan] [red]not found[red]");
             return -1;
@@ -44,70 +45,79 @@ public class RunActor : CliActorBase
         }
 
         var isFile = !string.IsNullOrEmpty(Path.GetExtension(path));
+        if (isFile)
+            return await ProcessSingleFile(path, processor, silent);
+        else 
+            return await ProcessPatchesFolder(path, processor, silent);
+    }
 
-        if (!isFile) {
-            var files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly);
-            var patches = new List<Patch>();
+    private async Task<int> ProcessPatchesFolder(string path, DatabaseProcessorBase processor, bool silent) {
+        var files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly);
+        var patches = new List<Patch>();
 
-            foreach (var file in files) {
-                var fileName = Path.GetFileName(file);
-                var fileContents = await File.ReadAllTextAsync(file);
-                var maybePatch = processor.ParsePatch(fileName, fileContents);
-
-                if (maybePatch.Failed) {
-                    Console.WriteColorLine($"[red]{maybePatch.Error}[/red]");
-                    return -1;
-                }
-
-                patches.Add(maybePatch.Unwrap());
-            }
-
-            var result = await processor.RunAsync(patches);
-
-#pragma warning disable 8602
-            if (result.Failed) {
-                Console.WriteColorLine($"[red]Error processing patch[/red] version [cyan]{result.Error.Version}[/cyan]: {result.Error.Description}");
-                return -1;
-            }
-#pragma warning restore 8602
-
-            if (!silent) {
-                Console.WriteColorLine("[green]All patches were applied.[/green] Press any key..");
-                System.Console.ReadLine();
-            }
-            else {
-                Console.WriteColorLine("[green]All patches were applied.[/green]");
-            }
-        }
-        else {
-            // Запросили отдельный (один) патч
-            var fileName = Path.GetFileName(path);
-            var fileContents = await File.ReadAllTextAsync(path);
-            var maybePatch = processor.ParsePatch(fileName, fileContents);
-
+        foreach (var file in files) {
+            var maybePatch = await PatchFromFile(path, processor);
             if (maybePatch.Failed) {
                 Console.WriteColorLine($"[red]{maybePatch.Error}[/red]");
                 return -1;
             }
 
-            var result = await processor.RunPatchAsync(maybePatch.Unwrap(), RunPatchOptions.CheckBeforeRun);
+            patches.Add(maybePatch.Unwrap());
+        }
+
+        var result = await processor.RunAsync(patches);
 
 #pragma warning disable 8602
-            if (result.Failed) {
-                Console.WriteColorLine($"[red]Error processing patch[/red]: {result.Error.Description}");
-                return -1;
-            }
+        if (result.Failed) {
+            Console.WriteColorLine($"[red]Error processing patch[/red] version [cyan]{result.Error.Version}[/cyan]: {result.Error.Description}");
+            return -1;
+        }
 #pragma warning restore 8602
 
-            if (!silent) {
-                Console.WriteColorLine("[green]All patches were applied.[/green] Press any key.");
-                System.Console.ReadLine();
-            }
-            else {
-                Console.WriteColorLine("[green]All patches were applied.[/green]");
-            }
+        if (!silent) {
+            Console.WriteColorLine("[green]All patches were applied.[/green] Press any key..");
+            System.Console.ReadLine();
+        }
+        else {
+            Console.WriteColorLine("[green]All patches were applied.[/green]");
         }
 
         return 0;
     }
+
+    private async Task<int> ProcessSingleFile(string path, DatabaseProcessorBase processor, bool silent) {
+        var maybePatch = await PatchFromFile(path, processor);
+        if (maybePatch.Failed) {
+            Console.WriteColorLine($"[red]{maybePatch.Error}[/red]");
+            return -1;
+        }
+        
+        var result = await processor.RunPatchAsync(maybePatch.Unwrap(), RunPatchOptions.CheckBeforeRun);
+
+#pragma warning disable 8602
+        if (result.Failed) {
+            Console.WriteColorLine($"[red]Error processing patch[/red]: {result.Error.Description}");
+            return -1;
+        }
+#pragma warning restore 8602
+
+        if (!silent) {
+            Console.WriteColorLine("[green]All patches were applied.[/green] Press any key.");
+            System.Console.ReadLine();
+        }
+        else {
+            Console.WriteColorLine("[green]All patches were applied.[/green]");
+        }
+
+        return 0;
+    }
+
+    private async Task<ErrorOr<Patch>> PatchFromFile(string path, DatabaseProcessorBase processor) {
+        var fileName = Path.GetFileName(path);
+        var fileContents = await File.ReadAllTextAsync(path);
+        var maybePatch = processor.ParsePatch(fileName, fileContents);
+
+        return maybePatch;
+    }
+
 }

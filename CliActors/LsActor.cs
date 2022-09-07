@@ -27,9 +27,9 @@ public class LsActor : CliActorBase
             Console.WriteColorLine($"\t  - Configuration name [cyan]({server.ConfigurationName})[/cyan]");
             Console.WriteColorLine($"\t  - Type [cyan]({server.Type})[/cyan]");
             Console.WriteColorLine($"\t  - Server name [cyan]({server.DnsName})[/cyan]");
-            Console.WriteColorLine($"\t  - Port [cyan]({(server.Port?.ToString() ?? "не указан")})[/cyan]");
+            Console.WriteColorLine($"\t  - Port [cyan]({(server.Port?.ToString() ?? "not set")})[/cyan]");
             Console.WriteColorLine($"\t  - User name [cyan]({server.DatabaseUser})[/cyan]");
-            Console.WriteColorLine($"\t  - User password [cyan]({(string.IsNullOrEmpty(server.Password) ? "не указан" : server.Password)})[/cyan]");
+            Console.WriteColorLine($"\t  - User password [cyan]({(string.IsNullOrEmpty(server.Password) ? "not set" : server.Password)})[/cyan]");
             Console.WriteColorLine($"\t  - Strict versioning [cyan]({((server.StrictVersioning.HasValue && server.StrictVersioning.Value) || !server.StrictVersioning.HasValue  ? "enabled" : "disabled")})[/cyan]");
             Console.WriteColorLine($"\t  - Patch preprocessing [cyan]({(preprocessingOn ? "enabled" : "disabled")})[/cyan]");
             Console.WriteColorLine($"\t  - Backup folder [cyan]({server.BackupFolder})[/cyan]");
