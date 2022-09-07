@@ -12,6 +12,11 @@ class Program
     public const string Version = "1.0";
     
     /// <summary>
+    /// Current revision of the executable
+    /// </summary>
+    public const string Revision = "b";
+    
+    /// <summary>
     /// Supported cli commands
     /// </summary>
     private static readonly List<(string name, bool isArgumentOptional, int argsCount, int? optionalCount)> SwitchesConfig = new(new[]
@@ -77,13 +82,14 @@ class Program
 #if DEBUG
         var options = ParseCommandLine(new[]
         {
-            "-add-server", "test"
+            "--version"
         });
 #else
         var options = ParseCommandLine(args);
 #endif
+        
         if (!options.Any()) {
-            Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}[/cyan]");
+            Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}{Revision}[/cyan]");
             Console.WriteLine();
             Console.WriteLine("Any key to exit");
             System.Console.ReadKey();
@@ -94,20 +100,17 @@ class Program
         var option = options.First();
         var actor = ActorsFactory.Get(option.Key, appConfig);
         
+        // Don't trash the output for Print and Version commands
+        if (option.Key is not CliActorBase.PrintCommand and not CliActorBase.VersionCommand) 
+            Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}{Revision}[/cyan]");
+
         if(actor == null)
         {
-            Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}[/cyan]");
             Console.WriteLine();
             Console.WriteLine($"{option.Key} option is not supported");
             return -1;
         }
 
-        // Don't trash the output for Print and Version commands
-        if (option.Key is not CliActorBase.PrintCommand and not CliActorBase.VersionCommand) {
-            Console.WriteColorLine($"[green]dbase[/green] version [cyan]{Version}[/cyan]");
-            Console.WriteLine();
-        }
-        
         return await actor.ExecuteAsync(option.Value);
     }
 
