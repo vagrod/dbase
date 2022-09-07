@@ -56,7 +56,7 @@ public class RunActor : CliActorBase
         var patches = new List<Patch>();
 
         foreach (var file in files) {
-            var maybePatch = await PatchFromFile(path, processor);
+            var maybePatch = await PatchFromFile(file, processor);
             if (maybePatch.Failed) {
                 Console.WriteColorLine($"[red]{maybePatch.Error}[/red]");
                 return -1;
