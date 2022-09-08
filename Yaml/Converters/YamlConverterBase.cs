@@ -152,8 +152,7 @@ public abstract class YamlConverterBase
             var maybeEntries = reader.Read(yamlData);
 
             if (maybeEntries.Failed)
-                return ErrorOr<IEnumerable<YamlProcessor.YamlEntry>>.Fail(
-                    $"Error reading dbase yaml instruction: {maybeEntries.UnwrapError()}");
+                return ErrorOr<IEnumerable<YamlProcessor.YamlEntry>>.Fail($"Error reading dbase yaml instruction: {maybeEntries.UnwrapError()}");
 
             return ErrorOr<IEnumerable<YamlProcessor.YamlEntry>>.Success(yaml.Process(maybeEntries.Unwrap()));
         }
@@ -172,16 +171,11 @@ public abstract class YamlConverterBase
         return GenerateSqlCodeFromYamlEntries(entries);
     }
     
-    private int DetectDescIndexInAString(string data) {
-        var descIndex = data.IndexOf(" desc ", StringComparison.OrdinalIgnoreCase);
-        
-        if(descIndex < 0)
-            descIndex = data.IndexOf(",desc ", StringComparison.OrdinalIgnoreCase);
-        
-        if(descIndex < 0)
-            descIndex = data.IndexOf("\tdesc ", StringComparison.OrdinalIgnoreCase);
-
-        return descIndex;
-    }
+    private int DetectDescIndexInAString(string data) => new[]
+    {
+        data.IndexOf(" desc ", StringComparison.OrdinalIgnoreCase),
+        data.IndexOf(",desc ", StringComparison.OrdinalIgnoreCase),
+        data.IndexOf("\tdesc ", StringComparison.OrdinalIgnoreCase)
+    }.Max();
 
 }

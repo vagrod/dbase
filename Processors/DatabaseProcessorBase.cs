@@ -118,7 +118,6 @@ public abstract class DatabaseProcessorBase
     /// Processor type -- see <see cref="ProcessorTypes"/>
     /// </summary>
     public abstract string ProcessorType { get; }
-
     /// <summary>
     /// Base processor constructor
     /// </summary>
@@ -197,7 +196,6 @@ public abstract class DatabaseProcessorBase
 
         return s;
     }
-
     /// <summary>
     /// Runs a single patch on a source
     /// </summary>
