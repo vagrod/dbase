@@ -1,3 +1,5 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://stand-with-ukraine.pp.ua)
+
 # Dbase storage versioning tool
 
 **Dbase** is a tool for keeping a remote server data storage (*mssql*, *postgresql*. etc.) up to date with versioned script files. Scripts can be either in a native to your server format, or in *dbase universal scripts* format
