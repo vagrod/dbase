@@ -14,7 +14,7 @@ class Program
     /// <summary>
     /// Current revision of the executable
     /// </summary>
-    public const string Revision = "b";
+    public const string Revision = "c";
     
     /// <summary>
     /// Supported cli commands
