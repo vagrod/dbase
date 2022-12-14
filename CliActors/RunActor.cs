@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 
 namespace Dbase.CliActors;
 
@@ -114,7 +115,7 @@ public class RunActor : CliActorBase
 
     private async Task<ErrorOr<Patch>> PatchFromFile(string path, DatabaseProcessorBase processor) {
         var fileName = Path.GetFileName(path);
-        var fileContents = await File.ReadAllTextAsync(path);
+        var fileContents = await File.ReadAllTextAsync(path, Encoding.UTF8);
         var maybePatch = processor.ParsePatch(fileName, fileContents);
 
         return maybePatch;

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 
@@ -99,7 +100,7 @@ public class Configuration
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
-            var config = deserializer.Deserialize<Configuration>(await File.ReadAllTextAsync("config.yaml"));
+            var config = deserializer.Deserialize<Configuration>(await File.ReadAllTextAsync("config.yaml", Encoding.UTF8));
             
             config.Servers ??= new();
             
