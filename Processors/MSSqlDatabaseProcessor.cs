@@ -433,7 +433,7 @@ public class MSSqlDatabaseProcessor : DatabaseProcessorBase
             await using var connection = new SqlConnection(ConnectionString);
             await connection.OpenAsync();
             
-            await using var command = new SqlCommand($"SELECT TOP 1 {HistoryFields.Major}, {HistoryFields.Minor} FROM dbase.{HistoryTableName} ORDER BY {HistoryFields.Major}, {HistoryFields.Minor} desc", connection);
+            await using var command = new SqlCommand($"SELECT TOP 1 {HistoryFields.Major}, {HistoryFields.Minor} FROM dbase.{HistoryTableName} ORDER BY {HistoryFields.Major} desc, {HistoryFields.Minor} desc", connection);
             await using var reader = await command.ExecuteReaderAsync();
             
             if (!await reader.ReadAsync())

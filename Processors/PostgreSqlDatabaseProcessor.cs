@@ -375,7 +375,7 @@ public class PostgreSqlDatabaseProcessor : DatabaseProcessorBase
             await using var connection = new NpgsqlConnection(ConnectionString);
             await connection.OpenAsync();
             
-            await using var command = new NpgsqlCommand($"SELECT {HistoryFields.Major}, {HistoryFields.Minor} FROM dbase.{HistoryTableName} ORDER BY {HistoryFields.Major}, {HistoryFields.Minor} DESC LIMIT 1", connection);
+            await using var command = new NpgsqlCommand($"SELECT {HistoryFields.Major}, {HistoryFields.Minor} FROM dbase.{HistoryTableName} ORDER BY {HistoryFields.Major} DESC, {HistoryFields.Minor} DESC LIMIT 1", connection);
             await using var reader = await command.ExecuteReaderAsync();
             
             if (!await reader.ReadAsync())
