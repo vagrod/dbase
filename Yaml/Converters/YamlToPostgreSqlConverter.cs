@@ -117,7 +117,7 @@ public class YamlToPostgreSqlConverter : YamlConverterBase
                 var fkName = $"fk_{storageData.Schema.ToLower()}_{storageData.Table.ToLower()}_{fieldInfo.Name.ToLower()}_{fieldInfo.ForeignKey.Schema.ToLower()}_{fieldInfo.ForeignKey.Table.ToLower()}_{fieldInfo.ForeignKey.Column.ToLower()}";
 
                 foreignKeys.Add($"      create unique index {fkName} " +
-                                $"\n        on \"{fieldInfo.ForeignKey.Schema}\".\"{fieldInfo.ForeignKey.Table}\"(\"{fieldInfo.ForeignKey.Column}\");");
+                                  $"\n        on \"{fieldInfo.ForeignKey.Schema}\".\"{fieldInfo.ForeignKey.Table}\"(\"{fieldInfo.ForeignKey.Column}\");");
                 foreignKeysConstraints.Add($"        constraint {fkName} foreign key(\"{field.Key}\") references \"{fieldInfo.ForeignKey.Schema}\".\"{fieldInfo.ForeignKey.Table}\"(\"{fieldInfo.ForeignKey.Column}\")");
             }
 

@@ -5,7 +5,7 @@ using Dbase.Yaml.Converters;
 namespace Dbase;
 
 /// <summary>
-/// PostgreSQL database processor.
+/// Microsoft SQL database processor.
 /// </summary>
 public class MSSqlDatabaseProcessor : DatabaseProcessorBase
 {

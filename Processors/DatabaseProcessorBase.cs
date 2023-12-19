@@ -129,7 +129,7 @@ public abstract class DatabaseProcessorBase
         DatabaseName = databaseName;
     }
     /// <summary>
-    /// Retuens the patch history
+    /// Returns the patch history
     /// </summary>
     /// <returns>History object, or error if failed</returns>
     protected abstract Task<ErrorOr<HistorySummary>> GetHistoryAsync();
